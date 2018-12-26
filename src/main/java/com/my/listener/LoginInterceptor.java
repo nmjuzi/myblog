@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.my.entity.Blogger;
 /**
- * 实现未登录页面拦截
+ * 未登陆用户不可请求controller操作（即不可查询，只能请求登陆方法）
  * @author wyw
  *
  */

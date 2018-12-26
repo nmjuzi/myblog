@@ -19,10 +19,12 @@ public class BlogServiceImpl implements BlogService {
 	 @Resource
 	 private BlogDao blogDao;
 
-	 public PageBean<Blog> listBlog(String title, PageBean<Blog> pageBean) {
+	 public PageBean<Blog> listBlog(String title, Integer id,PageBean<Blog> pageBean) {
 	        Map<String,Object> map = new HashMap<String,Object>();
+	        
 	        //设置查询条件
 	        map.put("title",title);
+	        map.put("bloggerId", id);
 	        //总记录放入pageBean
 	        pageBean.setTotal(blogDao.getTotal(map));
 	        map.put("start",pageBean.getStart());
@@ -60,4 +62,12 @@ public class BlogServiceImpl implements BlogService {
 	        return blogDao.getTotal(map);
 	    }
 
+	    public Blog getPrevBlog(Integer id) {
+			return blogDao.getPrevBlog(id);
+		}
+
+
+		public Blog getNextBlog(Integer id) {
+			return blogDao.getNextBlog(id);
+		}
 }

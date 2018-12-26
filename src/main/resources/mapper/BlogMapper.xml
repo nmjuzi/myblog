@@ -15,6 +15,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
         <association property="blogType" column="type_id" select="com.my.dao.BlogTypeDao.getById">
         </association>
+         <association property="blogger" column="blogger_id" select="com.my.dao.BloggerDao.getBloggerById">
+        </association>
 	</resultMap>
 	
 	<select id="listBlog" parameterType="Map" resultMap="BlogResult">
@@ -25,6 +27,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             </if>
             <if test="typeId!=null and typeId!=''">
                 and type_id=#{typeId}
+            </if>
+             <if test="bloggerId!=null and bloggerId!=''">
+                and blogger_id=#{bloggerId}
             </if>
             <if test="releaseDateStr!=null and releaseDateStr!=''">
                 and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
@@ -45,6 +50,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="typeId!=null and typeId!=''">
                 and type_id=#{typeId}
             </if>
+             <if test="bloggerId!=null and bloggerId!=''">
+                and blogger_id=#{bloggerId}
+            </if>
             <if test="releaseDateStr!=null and releaseDateStr!=''">
                 and DATE_FORMAT(releaseDate,'%Y年%m月')=#{releaseDateStr}
             </if>
@@ -56,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     </select>
 
     <insert id="saveBlog" parameterType="Blog" keyProperty="id" useGeneratedKeys="true">
-        insert into t_blog VALUES (NULL ,#{title},#{summary},now(),0,0,#{content},#{keyWord},#{blogType.id})
+        insert into t_blog VALUES (NULL ,#{title},#{summary},now(),0,0,#{content},#{keyWord},#{blogType.id},#{blogger.id})
     </insert>
 	
 	<update id="updateBlog" parameterType="Blog">
@@ -94,5 +102,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
     <select id="getById" parameterType="java.lang.Integer" resultMap="BlogResult">
         SELECT * from t_blog where id=#{id}
+    </select>
+    
+     <select id="getPrevBlog" parameterType="Integer" resultMap="BlogResult">
+        SELECT * FROM t_blog WHERE id&lt;#{id} ORDER BY id DESC LIMIT 1
+    </select>
+
+    <select id="getNextBlog" parameterType="Integer" resultMap="BlogResult">
+        SELECT * FROM t_blog WHERE id&gt;#{id} ORDER BY id ASC LIMIT 1
     </select>
 </mapper>

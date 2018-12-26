@@ -1,19 +1,26 @@
 package com.my.controller.admin;
 
+
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.my.entity.AjaxResult;
 import com.my.entity.Blog;
+import com.my.entity.Blogger;
 import com.my.entity.PageBean;
 import com.my.lucene.BlogIndex;
+import com.my.service.BlogCommentService;
 import com.my.service.BlogService;
 import com.my.util.ResponseUtil;
 
@@ -24,6 +31,9 @@ public class BlogController {
 	 private BlogService blogService;
 	 
 	 @Resource
+	 private BlogCommentService blogcommentService;
+	 
+	 @Resource
 	 private BlogIndex blogIndex;
 	 
 	 //后台分页查询博客信息
@@ -32,11 +42,11 @@ public class BlogController {
 	            @RequestParam(value = "page", required = false) String page,
 	            @RequestParam(value = "rows", required = false) String rows,
 	            Blog s_blog,
-	            HttpServletResponse response) throws Exception {
+	            HttpServletResponse response,HttpServletRequest request) throws Exception {
 
 	        PageBean<Blog> pageBean = new PageBean<Blog>(Integer.parseInt(page), Integer.parseInt(rows));
-
-	        pageBean = blogService.listBlog(s_blog.getTitle(), pageBean);
+	        Blogger currentUser = (Blogger)request.getSession().getAttribute("currentUser");
+	        pageBean = blogService.listBlog(s_blog.getTitle(),currentUser.getId(),pageBean);
 
 	        //创建json对象
 	        JSONObject result = new JSONObject();
@@ -59,8 +69,20 @@ public class BlogController {
 	    
 	  //更新或者新增博客
 	    @RequestMapping(value = "/save")
-	    public String saveBlog(Blog blog,HttpServletResponse response) throws Exception {
+	    @ResponseBody
+	    public AjaxResult saveBlog(Blog blog,HttpServletResponse response,HttpServletRequest request) throws Exception {
 	        int resultTotal = 0;
+	        Blogger b = new Blogger();
+	        AjaxResult result= new AjaxResult();
+	        Blogger currentUser = (Blogger)request.getSession().getAttribute("currentUser");
+	        if(currentUser==null){
+	        	result.setSuccess(false);
+	        	result.setMsg("登录信息失效，请重新登录后重试！");
+	        	return result;
+	        }
+	        b.setId(currentUser.getId());
+	        blog.setBlogger(b);
+	       
 	        if(blog.getId()!=null){
 	            //更新操作
 	            resultTotal = blogService.updateBlog(blog);
@@ -72,14 +94,14 @@ public class BlogController {
 	            //添加索引
 	           blogIndex.addIndex(blog);
 	        }
-	        JSONObject result = new JSONObject();
 	        if(resultTotal > 0) {
-	            result.put("success", true);
+	        	result.setSuccess(true);
+	        	result.setMsg("博客发布成功！");
 	        } else {
-	            result.put("success", false);
+	        	result.setSuccess(false);
+	        	result.setMsg("博客发布失败！");
 	        }
-	        ResponseUtil.write(response, result);
-	        return null;
+	        return result;
 	    }
 
 	    //删除博客
@@ -88,8 +110,8 @@ public class BlogController {
 	        String[] idsStr = ids.split(",");
 	        for(int i = 0; i < idsStr.length; i++) {
 	            int id = Integer.parseInt(idsStr[i]);
-	            //先删除博客所关联的评论 现在没有完成评论的功能 先注释
-	            //commentService.deleteCommentByBlogId(id);
+	            //删除博客时，所属的评论也应该删除
+	            blogcommentService.deleteCommentByBlogId(id);
 	            blogService.deleteBlog(id);
 	        }
 	        JSONObject result = new JSONObject();
@@ -108,5 +130,5 @@ public class BlogController {
 	        ResponseUtil.write(response, result);
 	        return null;
 	    }
-
+	   
 }

@@ -1,4 +1,4 @@
-package com.my.dao;
+/*package com.my.dao;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class BlogCommentDaoTest {
 	@Resource
 	BlogCommentDao blogCommentDao;
 	
-/*	@Test
+	@Test
 	public void listByPage(){
 		Integer page = 1;
 		Integer pageSize = 2;
@@ -29,7 +29,7 @@ public class BlogCommentDaoTest {
 		for(BlogComment b:list){
 			System.out.println(b);
 		}
-	}*/
+	}
 	
 	
 	
@@ -43,3 +43,4 @@ public class BlogCommentDaoTest {
 	
 	
 }
+*/

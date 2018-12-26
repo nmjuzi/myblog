@@ -15,8 +15,8 @@ public class BloggerServiceImpl implements BloggerService {
 	 @Resource
 	 private BloggerDao bloggerDao;
 	
-	 public Blogger getBloggerData() {
-		 return bloggerDao.getBloggerData();
+	 public Blogger getBloggerById(Integer id) {
+		 return bloggerDao.getBloggerById(id);
 	}
 
 	

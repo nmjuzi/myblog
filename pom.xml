@@ -31,6 +31,7 @@
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>3.1.0</version>
+   <!--   <scope>provided</scope> -->  <!-- 使用tomcat7:run时使用  -->
     </dependency>
     <!-- 添加jsp支持 -->
     <dependency>
@@ -155,20 +156,29 @@
       <artifactId>commons-logging</artifactId>
       <version>1.2</version>
     </dependency>
-    <!-- 添加junit支持 -->
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.12</version>
-      <scope>test</scope>
-    </dependency>
-    
     <!-- 阿里巴巴json序列化工具-->
     	<dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
             <version>1.2.7</version>
         </dependency>
+        
+    <dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+    <version>2.7.4</version>
+</dependency>
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-core</artifactId>
+    <version>2.7.4</version>
+</dependency>
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-annotations</artifactId>
+    <version>2.7.4</version>
+</dependency>
+
     <!-- 添加Shiro支持 -->
     <dependency>
       <groupId>org.apache.shiro</groupId>
@@ -254,6 +264,20 @@
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
         </plugin>
+       <!--  <plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8083</port>
+					<path>/myblog</path>
+					<uriEncoding>UTF-8</uriEncoding>
+					<server>tomcat7</server>
+					<systemProperties>
+						<JAVA_OPTS>-Xms256 -Xmx512m -XX:MaxpermSize=256m</JAVA_OPTS>
+					</systemProperties>
+				</configuration>
+			</plugin> -->
       </plugins>
     </pluginManagement>
   </build>

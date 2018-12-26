@@ -13,7 +13,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.my.entity.Blogger;
-
+/**
+ * 未登陆用户不可访问某些页面
+ * @author wyw
+ *
+ */
 
 
 public class LoginFilter implements  Filter  {

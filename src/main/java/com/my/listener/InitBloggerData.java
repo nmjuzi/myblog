@@ -20,10 +20,10 @@ import com.my.service.BloggerService;
 public class InitBloggerData implements ServletContextListener,
 		ApplicationContextAware {
 	private static ApplicationContext applicationContext;
-	
+	//此方法不好用，不能及时更新信息（如果是个人博客完全可以将博主信息存入使用此方法比较方便）
 	
 	public void contextInitialized(ServletContextEvent sce) {
-        //先获取servlet上下文
+        /*//先获取servlet上下文
         ServletContext application = sce.getServletContext();
         //同上，获取博客类别信息service
         BlogTypeService blogTypeService = applicationContext.getBean(BlogTypeService.class);
@@ -38,7 +38,7 @@ public class InitBloggerData implements ServletContextListener,
       	System.out.println(">>>>>>>>>>>>>>>>>>>>>>>blogger:"+blogger);
       	//隐藏密码
       	blogger.setPassword(null);
-      	application.setAttribute("blogger",blogger);
+      	application.setAttribute("blogger",blogger);*/
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

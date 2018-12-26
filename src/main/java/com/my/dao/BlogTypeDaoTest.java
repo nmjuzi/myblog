@@ -1,4 +1,4 @@
-package com.my.dao;
+/*package com.my.dao;
 
 import java.util.List;
 
@@ -69,3 +69,4 @@ public class BlogTypeDaoTest {
 	    }
 
 }
+*/

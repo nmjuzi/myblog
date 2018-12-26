@@ -16,6 +16,7 @@ public class Blog {
     private String keyWord; //关键字，用空格隔开
 
     private BlogType blogType; //博客类型
+    private Blogger  blogger; //博客所属人
     private Integer blogCount; //博客数量，非博客实际属性，用于根据发布日期归档查询
     private String releaseDateStr; //发布日期的字符串，只取年月
 
@@ -124,6 +125,25 @@ public class Blog {
 
 	public void setContentNoTag(String contentNoTag) {
 		this.contentNoTag = contentNoTag;
+	}
+
+	public Blogger getBlogger() {
+		return blogger;
+	}
+
+	public void setBlogger(Blogger blogger) {
+		this.blogger = blogger;
+	}
+
+	@Override
+	public String toString() {
+		return "Blog [id=" + id + ", title=" + title + ", summary=" + summary
+				+ ", releaseDate=" + releaseDate + ", clickHit=" + clickHit
+				+ ", replyHit=" + replyHit + ", content=" + content
+				+ ", contentNoTag=" + contentNoTag + ", keyWord=" + keyWord
+				+ ", blogType=" + blogType + ", blogger=" + blogger
+				+ ", blogCount=" + blogCount + ", releaseDateStr="
+				+ releaseDateStr + ", imageList=" + imageList + "]";
 	}
     
     

@@ -42,7 +42,7 @@ public class BlogUserController {
 
 	        ModelAndView modelAndView = new ModelAndView();
 	        Blog blog = blogService.getById(id); // 根据id获取博客
-
+	        System.out.println("blog:"+blog);
 	        // 获取关键字
 	        String keyWords = blog.getKeyWord();
 	        if (StringUtil.isNotEmpty(keyWords)) {
@@ -66,7 +66,7 @@ public class BlogUserController {
 
 	        modelAndView.addObject("commentList", commentList);
 	        modelAndView.addObject("commonPage", "foreground/blog/blogDetail.jsp");
-	        modelAndView.addObject("title", blog.getTitle() + " - 老王和小平的博客");
+	        modelAndView.addObject("title", blog.getTitle() + " - 老王和小平aaaa的博客");
 
 	       /* // 存入上一篇和下一篇的显示代码
 	        modelAndView.addObject("pageCode", PageUtil.getPrevAndNextPageCode(

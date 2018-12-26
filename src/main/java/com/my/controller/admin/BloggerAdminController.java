@@ -28,8 +28,9 @@ public class BloggerAdminController {
 	
 	 //获取博主信息
     @RequestMapping(value = "getBloggerInfo")
-    public String getBloggerData(HttpServletResponse response) throws Exception {
-        Blogger blogger = bloggerService.getBloggerData();
+    public String getBloggerData(HttpServletRequest request,HttpServletResponse response) throws Exception {
+    	Blogger currentUser = (Blogger)request.getSession().getAttribute("currentUser");
+        Blogger blogger = bloggerService.getBloggerByName(currentUser.getUserName());
         String jsonStr = JSONObject.toJSONString(blogger);
         JSONObject object = JSONObject.parseObject(jsonStr);
         ResponseUtil.write(response,object);
@@ -40,13 +41,20 @@ public class BloggerAdminController {
     @RequestMapping(value = "save",method = RequestMethod.POST)
     public String saveBlogger(@RequestParam(value = "imageFile",required = false) MultipartFile imageFile, Blogger blogger,
                               HttpServletRequest request,HttpServletResponse response) throws Exception {
-        //判断是否有上图片 有就更新
+        System.out.println("blogger:"+blogger);
+    	//判断是否有上图片 有就更新
         if(!imageFile.isEmpty()){
-           // String filePath = PathUtil.getRootPath(); //获取服务器根路径
-        	String filePath = request.getSession().getServletContext().getRealPath("/");
-        	System.out.println(">>>>>>>>>>>>>>>>>"+filePath);
+        	//String filePath = request.getServletContext().getRealPath("/");
+        	//String filePath = request.getRequestURI();;
+            // String filePath = PathUtil.getRootPath()+ "/webapp/myblog/userImages/"; //获取服务器根路径
+        	String filePath = request.getSession().getServletContext().getRealPath("/")+"static/userImages/";  //E:\tomcat_7.0.39\webapps\myblog\
+        	System.out.println(">>>>>>>>>>>>>>>>>"+filePath); 	
+        	File file = new File(filePath);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
             String imageName = DateUtil.getCurrentDateStr() + "." + imageFile.getOriginalFilename().split("\\.")[1];
-            imageFile.transferTo(new File(filePath + "/static/userImages/" + imageName));
+            imageFile.transferTo(new File(filePath + imageName));
             blogger.setImageName(imageName);
         }
         int resultTotal = bloggerService.updateBlogger(blogger);

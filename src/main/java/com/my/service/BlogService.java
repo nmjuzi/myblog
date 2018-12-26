@@ -11,7 +11,7 @@ public interface BlogService {
     public List<Blog> listBlog(Map<String,Object> map);
 
     // 分页查询博客
-    public PageBean<Blog> listBlog(String title,PageBean<Blog> pageBean);
+    public PageBean<Blog> listBlog(String title,Integer id,PageBean<Blog> pageBean);
 
     // 根据博客类型的id查询该类型下的博客数量
     public Integer getBlogByTypeId(Integer typeId);
@@ -29,5 +29,18 @@ public interface BlogService {
     public Blog getById(Integer id);
 
     long getTotal(Map<String, Object> map);
+    
+    /**
+     * 获取上一篇博客
+     * @param id
+     * @return
+     */
+    Blog getPrevBlog(Integer id);
+    /**
+     * 获取下一篇博客
+     * @param id
+     * @return
+     */
+    Blog getNextBlog(Integer id);
 
 }

@@ -21,13 +21,13 @@
     <sql id="BloggerColumns">
         id,username,password,profile,nickname,sign,imagename
     </sql>
-    <!-- 接口中getBloggerData 具体实现-->
-    <select id="getBloggerData" resultMap="BloggerResult">
-            select <include refid="BloggerColumns"/>    from t_blogger where id = 1
-    </select>
      <select id="getBloggerByName" parameterType="java.lang.String" resultMap="BloggerResult">
         SELECT <include refid="BloggerColumns"/> from t_blogger
         where username=#{username}
+    </select>
+     <select id="getBloggerById" parameterType="java.lang.Integer" resultMap="BloggerResult" >
+        SELECT <include refid="BloggerColumns"/> from t_blogger
+            where id = #{id}
     </select>
     <update id="updateBlogger" parameterType="Blogger">
         UPDATE t_blogger
@@ -48,6 +48,6 @@
                 imagename=#{imageName},
             </if>
         </set>
-        where id=1
+        where id=#{id}
     </update>
 </mapper>

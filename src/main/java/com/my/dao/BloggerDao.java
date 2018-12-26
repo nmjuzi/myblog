@@ -10,13 +10,7 @@ import com.my.entity.Blogger;
  */
 @Repository //注册为持久层的bean
 public interface BloggerDao {
-	/**
-     * 查询博主信息
-     * @return
-     */
-    Blogger getBloggerData();
-    
-
+	
     /**
      * 通过用户名查询博主信息
      * @param username
@@ -30,4 +24,11 @@ public interface BloggerDao {
      * @return
      */
     Integer updateBlogger(Blogger blogger);
+    
+    /**
+     * 通过id查询博主信息
+     * @param username
+     * @return
+     */
+    Blogger getBloggerById(Integer id);
 }

@@ -1,4 +1,4 @@
-package com.my.dao;
+/*package com.my.dao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,9 +16,6 @@ public class BloggerDaoTest {
 	@Resource   //注入BloggerDao对象
     private BloggerDao bloggerDao;
 
-    @Test
-    public void getBloggerData() throws Exception {
-        Blogger blogger = bloggerDao.getBloggerData();
-        System.out.println(blogger);
-    }
+  
 }
+*/
