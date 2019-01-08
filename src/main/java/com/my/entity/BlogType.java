@@ -2,6 +2,7 @@ package com.my.entity;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class BlogType implements Serializable {
 	private Integer id;
     private String typeName;

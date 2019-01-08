@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.my.entity.Blogger;
+import com.my.redis.RedisUtil;
 import com.my.service.BloggerService;
 import com.my.util.DateUtil;
 import com.my.util.MD5Util;
@@ -26,6 +27,9 @@ public class BloggerAdminController {
 	@Resource
     private BloggerService bloggerService;
 	
+	 @Resource
+	 private RedisUtil redisUtil;
+	
 	 //获取博主信息
     @RequestMapping(value = "getBloggerInfo")
     public String getBloggerData(HttpServletRequest request,HttpServletResponse response) throws Exception {
@@ -33,6 +37,7 @@ public class BloggerAdminController {
         Blogger blogger = bloggerService.getBloggerByName(currentUser.getUserName());
         String jsonStr = JSONObject.toJSONString(blogger);
         JSONObject object = JSONObject.parseObject(jsonStr);
+        System.out.println("getBloggerInfo里的ceshikey："+redisUtil.get("ceshikey"));
         ResponseUtil.write(response,object);
         return null;
     }

@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.my.entity.BlogComment;
 import com.my.entity.PageBean;
+import com.my.redis.RedisUtil;
 import com.my.service.BlogCommentService;
 import com.my.util.ResponseUtil;
 
@@ -25,6 +26,10 @@ public class BlogCommentController {
 
 	@Resource
 	private BlogCommentService blogCommentService;
+	
+	@Resource
+ 	private RedisUtil redisUtil;
+ 	
 	
 	//评论分页显示
 	@RequestMapping(value="/list")

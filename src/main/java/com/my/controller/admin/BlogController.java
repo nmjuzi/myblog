@@ -20,6 +20,7 @@ import com.my.entity.Blog;
 import com.my.entity.Blogger;
 import com.my.entity.PageBean;
 import com.my.lucene.BlogIndex;
+import com.my.redis.RedisUtil;
 import com.my.service.BlogCommentService;
 import com.my.service.BlogService;
 import com.my.util.ResponseUtil;
@@ -36,6 +37,9 @@ public class BlogController {
 	 @Resource
 	 private BlogIndex blogIndex;
 	 
+	 @Resource
+	 private RedisUtil redisUtil;
+	 
 	 //后台分页查询博客信息
 	    @RequestMapping("/listBlog")
 	    public String listBlog(
@@ -47,7 +51,7 @@ public class BlogController {
 	        PageBean<Blog> pageBean = new PageBean<Blog>(Integer.parseInt(page), Integer.parseInt(rows));
 	        Blogger currentUser = (Blogger)request.getSession().getAttribute("currentUser");
 	        pageBean = blogService.listBlog(s_blog.getTitle(),currentUser.getId(),pageBean);
-
+	        
 	        //创建json对象
 	        JSONObject result = new JSONObject();
 	        //设置json序列化日期格式

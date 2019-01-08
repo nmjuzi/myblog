@@ -1,10 +1,12 @@
 package com.my.entity;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PageBean<T> {
+@SuppressWarnings("serial")
+public class PageBean<T> implements Serializable{
 	private int currPage;   //当前页数
     private int pageSize;   //每页显示的个数
     private long total;      //总记录数

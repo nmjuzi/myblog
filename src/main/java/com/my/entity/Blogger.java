@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
  * @author wyw
  * @Description 博主信息实体类
  */
+@SuppressWarnings("serial")
 @Component  //注册bean 为spring容器管理
 public class Blogger implements Serializable {
 	private Integer id;

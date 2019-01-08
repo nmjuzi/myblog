@@ -73,4 +73,19 @@
             class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager" />
     </bean>
+    <!-- 引入配置文件 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+        	<list>
+        		<value>classpath:log4j.properties</value>        
+        		<value>classpath:redis.properties</value>
+        	</list>
+        </property>
+        <!--这个配置告诉spring，当某个placeholder无法找到时，
+        	先不要报错，并尝试用另一个PropertyPlaceholderConfigurer来设置placeholder的值。 -->
+        <!-- <property name="ignoreUnresolvablePlaceholders" value="true"></property> -->
+	</bean>
+	<!-- redis配置 -->
+	<import resource="spring-redis.xml" />
+
 </beans>

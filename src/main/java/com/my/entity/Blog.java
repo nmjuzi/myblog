@@ -1,10 +1,12 @@
 package com.my.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Blog {
+@SuppressWarnings("serial")
+public class Blog implements Serializable{
 	private Integer id;
     private String title;
     private String summary;
